@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import Banner from './componentes/Banner';
+import { IColaborador } from './compartilhado/interfaces/IColaborador';
+import Banner from './componentes/Banner'
 import Formulario from './componentes/Formulario';
 import Time from './componentes/Time';
 
@@ -43,17 +44,21 @@ function App() {
     }
   ]
 
-  const [colaboradores, setColaboradores] = useState([])
+  // ** com o Generics conseguimos dizer tipar o useState.
+  // ** Neste caso estamos dizendo que o estado é do tipo IColaborador
+  const [colaboradores, setColaboradores] = useState<IColaborador[]>([])
 
-  const aoNovoColaboradorAdicionado = (colaborador) => {
-    debugger
+  const aoNovoColaboradorAdicionado = (colaborador: IColaborador) => {
     setColaboradores([...colaboradores, colaborador])
   }
 
   return (
     <div className="App">
-      <Banner />
-      <Formulario times={times.map(time => time.nome)} aoColaboradorCadastrado={colaborador => aoNovoColaboradorAdicionado(colaborador)}/>
+      <Banner enderecoImagem='/imagens/banner.png' textoAlternativo="O banner principal da página do Organo"/>
+      <Formulario
+        times={times.map(time => time.nome)}
+        aoColaboradorCadastrado={colaborador => aoNovoColaboradorAdicionado(colaborador)}
+      />
 
       {times.map(time => <Time 
         key={time.nome} 
